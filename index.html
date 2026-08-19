@@ -731,9 +731,14 @@ main.is-visible{ opacity:1; transition:opacity 1.2s var(--ease-soft); }
   text-align:left;
   transition:background .4s var(--ease-soft), border-color .4s var(--ease-soft), transform .35s var(--ease-soft), box-shadow .4s var(--ease-soft);
 }
-.location-card .location-pin{
+.location-card .location-thumb{
   flex:0 0 auto;
-  color:var(--gold-soft);
+  width:44px;
+  height:44px;
+  border-radius:50%;
+  object-fit:cover;
+  object-position:top center;
+  border:1px solid rgba(201,163,96,.5);
 }
 .location-card .location-name{
   flex:1 1 auto;
@@ -1208,19 +1213,13 @@ main.is-visible{ opacity:1; transition:opacity 1.2s var(--ease-soft); }
 
       <div class="locations-grid">
         <a class="location-card reveal" href="https://share.google/9mEJUV1U2YGRQNRc7" target="_blank" rel="noopener">
-          <svg class="location-pin" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M12 22s7-7.58 7-13A7 7 0 1 0 5 9c0 5.42 7 13 7 13z" fill="none" stroke="currentColor" stroke-width="1.4"/>
-            <circle cx="12" cy="9" r="2.4" fill="none" stroke="currentColor" stroke-width="1.4"/>
-          </svg>
+          <img class="location-thumb" src="assets/location-sangeeth.jpg" alt="Sangeeth Night" width="44" height="44" loading="lazy">
           <span class="location-name">Sangeeth Night</span>
           <span class="location-cta">View Location <span class="arrow">&rarr;</span></span>
         </a>
 
         <a class="location-card reveal" href="https://maps.app.goo.gl/Bim7oZ5evd64DZ6F7?g_st=ic" target="_blank" rel="noopener">
-          <svg class="location-pin" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M12 22s7-7.58 7-13A7 7 0 1 0 5 9c0 5.42 7 13 7 13z" fill="none" stroke="currentColor" stroke-width="1.4"/>
-            <circle cx="12" cy="9" r="2.4" fill="none" stroke="currentColor" stroke-width="1.4"/>
-          </svg>
+          <img class="location-thumb" src="assets/location-wedding.jpg" alt="Wedding" width="44" height="44" loading="lazy">
           <span class="location-name">Wedding</span>
           <span class="location-cta">View Location <span class="arrow">&rarr;</span></span>
         </a>
