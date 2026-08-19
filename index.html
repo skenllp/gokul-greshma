@@ -6,14 +6,14 @@
 <meta name="theme-color" content="#173F32">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>Gokul Krishnan &amp; Greeshma Lal | Wedding Invitation</title>
-<meta name="description" content="Join us in celebrating the wedding of Gokul Krishnan &amp; Greeshma Lal on 25 October 2026 in Guruvayur, followed by the reception on 27 October 2026 in Kayamkulam.">
+<meta name="description" content="Join us in celebrating the wedding of Gokul Krishnan &amp; Greeshma Lal — Sangeeth Night on 24 October, the wedding on 25 October in Guruvayur, followed by receptions on 27 October in Kayamkulam and 31 October in Navi Mumbai.">
 <link rel="canonical" href="https://gokul-greshma.vercel.app/">
 
 <!-- Open Graph -->
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://gokul-greshma.vercel.app/">
 <meta property="og:title" content="Gokul Krishnan &amp; Greeshma Lal | Wedding Invitation">
-<meta property="og:description" content="Join us in celebrating the wedding of Gokul Krishnan &amp; Greeshma Lal on 25 October 2026 in Guruvayur, followed by the reception on 27 October 2026 in Kayamkulam.">
+<meta property="og:description" content="Join us in celebrating the wedding of Gokul Krishnan &amp; Greeshma Lal — Sangeeth Night on 24 October, the wedding on 25 October in Guruvayur, followed by receptions on 27 October in Kayamkulam and 31 October in Navi Mumbai.">
 <meta property="og:image" content="https://gokul-greshma.vercel.app/assets/og-image.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -485,6 +485,7 @@ main.is-visible{ opacity:1; transition:opacity 1.2s var(--ease-soft); }
 .bg-a .bg-layer{ background-image:url('assets/temple-main.jpg'); }
 .bg-a-hero .bg-layer{ background-position:50% 12%; }
 .bg-a-couple .bg-layer{ background-position:50% 48%; }
+.bg-a-sangeeth .bg-layer{ background-position:50% 65%; }
 .bg-a-family .bg-layer{ background-position:50% 82%; }
 
 /* Background B — Wedding / Message / Reception — Temple Courtyard */
@@ -493,6 +494,7 @@ main.is-visible{ opacity:1; transition:opacity 1.2s var(--ease-soft); }
 .bg-b-ceremony .bg-layer{ background-position:62% 38%; }
 .bg-b-message .bg-layer{ background-position:38% 62%; }
 .bg-b-reception .bg-layer{ background-position:50% 20%; }
+.bg-b-reception2 .bg-layer{ background-position:28% 46%; }
 .bg-b-locations .bg-layer{ background-position:70% 65%; }
 
 /* Footer family — RSVP / Closing — Forest Pond & Swan */
@@ -538,10 +540,18 @@ main.is-visible{ opacity:1; transition:opacity 1.2s var(--ease-soft); }
 
 .bg-a .event-time, .bg-b .event-time,
 .bg-a .venue-place, .bg-b .venue-place,
+.bg-a .dress-value, .bg-b .dress-value,
 .bg-a .family-block .place{
   color:var(--cream);
   opacity:.92;
 }
+
+.bg-a .dress-label, .bg-b .dress-label,
+.bg-a .event-note, .bg-b .event-note{
+  color:var(--gold-soft);
+}
+
+.bg-a .location-tag, .bg-b .location-tag{ color:var(--jasmine); border-color:var(--gold-soft); }
 
 .bg-a .btn, .bg-b .btn{ color:var(--jasmine); border-color:var(--gold); }
 .bg-a .btn:hover, .bg-a .btn:active,
@@ -620,7 +630,29 @@ main.is-visible{ opacity:1; transition:opacity 1.2s var(--ease-soft); }
 
 .venue-label{ margin-top:22px; font-size:11px; letter-spacing:.28em; text-transform:uppercase; color:var(--gold-deep); }
 .venue-name{ font-family:var(--font-display); font-weight:600; font-size:clamp(20px,5vw,26px); color:var(--deep-green); margin-top:6px; }
-.venue-place{ font-size:14px; color:var(--brown); opacity:.8; margin-top:2px; }
+.venue-place{ font-size:14px; color:var(--brown); opacity:.8; margin-top:2px; line-height:1.5; }
+
+/* Location tag — small pill distinguishing multi-city functions (e.g. the two receptions) */
+.location-tag{
+  display:inline-block;
+  margin-bottom:4px;
+  padding:5px 16px;
+  border:1px solid var(--gold);
+  border-radius:20px;
+  font-family:var(--font-body);
+  font-size:10px;
+  font-weight:600;
+  letter-spacing:.26em;
+  text-transform:uppercase;
+  color:var(--gold-deep);
+}
+
+/* Dress code line — mirrors the venue label/name pairing */
+.dress-label{ margin-top:20px; font-size:11px; letter-spacing:.28em; text-transform:uppercase; color:var(--gold-deep); }
+.dress-value{ font-family:var(--font-body); font-size:14px; letter-spacing:.02em; color:var(--brown); opacity:.85; margin-top:5px; }
+
+/* Small italic note — used where a time/detail is intentionally not yet announced */
+.event-note{ margin-top:14px; font-family:var(--font-display); font-style:italic; font-size:15px; color:var(--gold-deep); opacity:.9; }
 
 .btn{
   display:inline-flex;
@@ -767,6 +799,8 @@ main.is-visible{ opacity:1; transition:opacity 1.2s var(--ease-soft); }
   white-space:nowrap;
 }
 .location-card .location-cta .arrow{ transition:transform .35s var(--ease-soft); }
+.location-card .location-address{ flex:0 0 auto; font-size:11px; letter-spacing:.02em; color:var(--gold-soft); opacity:.85; line-height:1.5; text-align:right; }
+.location-card.is-static{ cursor:default; }
 .location-card:active{
   background:linear-gradient(135deg, rgba(255,248,232,.16), rgba(255,248,232,.05));
   transform:scale(.98);
@@ -784,6 +818,7 @@ main.is-visible{ opacity:1; transition:opacity 1.2s var(--ease-soft); }
   .locations-grid{ flex-direction:row; }
   .location-card{ flex-direction:column; align-items:flex-start; gap:12px; text-align:left; }
   .location-card .location-name{ font-size:clamp(18px,2.4vw,21px); }
+  .location-card .location-address{ text-align:left; }
 }
 
 /* ============================================================
@@ -1134,6 +1169,28 @@ main.is-visible{ opacity:1; transition:opacity 1.2s var(--ease-soft); }
     </div>
   </section>
 
+  <!-- SANGEETH NIGHT -->
+  <section id="sangeeth" class="section bg-a bg-a-sangeeth">
+    <div class="bg-layer" aria-hidden="true"></div>
+    <div class="overlay overlay-ivory" aria-hidden="true"></div>
+    <div class="section-inner">
+      <div class="eyebrow reveal">The Celebration Begins</div>
+      <h2 class="section-title reveal">Sangeeth Night</h2>
+
+      <div class="corner-frame event-card reveal" style="margin-top:26px;">
+        <span class="cf-tr"></span><span class="cf-bl"></span>
+        <div class="event-day">Saturday, October 24, 2026</div>
+        <div class="event-note">Time to be announced</div>
+
+        <div class="venue-label">Venue</div>
+        <div class="venue-name">Gokulam Sabari</div>
+        <div class="venue-place">Guruvayoor</div>
+
+        <a class="btn" href="https://share.google/9mEJUV1U2YGRQNRc7" target="_blank" rel="noopener">View Location</a>
+      </div>
+    </div>
+  </section>
+
   <!-- WEDDING CEREMONY -->
   <section id="ceremony" class="section bg-b bg-b-ceremony">
     <div class="bg-layer" aria-hidden="true"></div>
@@ -1168,7 +1225,7 @@ main.is-visible{ opacity:1; transition:opacity 1.2s var(--ease-soft); }
   </section>
 
   <!-- WEDDING MESSAGE -->
-  <section id="message" class="section bg-b bg-b-message">
+  <!-- <section id="message" class="section bg-b bg-b-message">
     <div class="bg-layer" aria-hidden="true"></div>
     <div class="overlay overlay-cream" aria-hidden="true"></div>
     <div class="section-inner corner-frame reveal-scale">
@@ -1181,7 +1238,7 @@ main.is-visible{ opacity:1; transition:opacity 1.2s var(--ease-soft); }
         <span class="line"></span><span class="diamond"></span><span class="line"></span>
       </div>
     </div>
-  </section>
+  </section> -->
 
   <!-- RECEPTION -->
   <section id="reception" class="section bg-b bg-b-reception">
@@ -1189,7 +1246,8 @@ main.is-visible{ opacity:1; transition:opacity 1.2s var(--ease-soft); }
     <div class="overlay overlay-cream" aria-hidden="true"></div>
     <div class="section-inner">
       <div class="eyebrow reveal">You Are Cordially Invited</div>
-      <h2 class="section-title reveal">The Reception</h2>
+      <div class="location-tag reveal">Kerala</div>
+      <h2 class="section-title reveal">Wedding Reception</h2>
 
       <div class="corner-frame event-card reveal" style="margin-top:26px;">
         <span class="cf-tr"></span><span class="cf-bl"></span>
@@ -1199,9 +1257,36 @@ main.is-visible{ opacity:1; transition:opacity 1.2s var(--ease-soft); }
 
         <div class="venue-label">Venue</div>
         <div class="venue-name">Crown Auditorium</div>
-        <div class="venue-place">Kuttitheeruvu, Kayamkulam</div>
+        <div class="venue-place">Kuttitheruvu, Kayamkulam</div>
+
+        <div class="dress-label">Dress Code</div>
+        <div class="dress-value">Traditional Ethnic Wear in Pastel Colors</div>
 
         <a class="btn" href="https://maps.app.goo.gl/Yzrdg26LAZJpZaYR8?g_st=ic" target="_blank" rel="noopener">View Location</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- RECEPTION — NAVI MUMBAI -->
+  <section id="reception-mumbai" class="section bg-b bg-b-reception2">
+    <div class="bg-layer" aria-hidden="true"></div>
+    <div class="overlay overlay-cream" aria-hidden="true"></div>
+    <div class="section-inner">
+      <div class="eyebrow reveal">You Are Cordially Invited</div>
+      <div class="location-tag reveal">Navi Mumbai</div>
+      <h2 class="section-title reveal">Wedding Reception</h2>
+
+      <div class="corner-frame event-card reveal" style="margin-top:26px;">
+        <span class="cf-tr"></span><span class="cf-bl"></span>
+        <div class="event-day">Saturday, October 31, 2026</div>
+        <div class="event-time"><small>Reception</small>6:00 PM – 11:00 PM</div>
+
+        <div class="venue-label">Venue</div>
+        <div class="venue-name">Ramada</div>
+        <div class="venue-place">156, Millennium Business Park, MIDC,<br>Sector 2, Mahape, Navi Mumbai</div>
+
+        <div class="dress-label">Dress Code</div>
+        <div class="dress-value">Western Party Wear</div>
       </div>
     </div>
   </section>
@@ -1241,9 +1326,18 @@ main.is-visible{ opacity:1; transition:opacity 1.2s var(--ease-soft); }
             <path d="M12 22s7-7.58 7-13A7 7 0 1 0 5 9c0 5.42 7 13 7 13z" fill="none" stroke="currentColor" stroke-width="1.4"/>
             <circle cx="12" cy="9" r="2.4" fill="none" stroke="currentColor" stroke-width="1.4"/>
           </svg>
-          <span class="location-name">Reception</span>
+          <span class="location-name">Reception · Kerala</span>
           <span class="location-cta">View Location <span class="arrow">&rarr;</span></span>
         </a>
+
+        <div class="location-card is-static reveal">
+          <svg class="location-pin" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 22s7-7.58 7-13A7 7 0 1 0 5 9c0 5.42 7 13 7 13z" fill="none" stroke="currentColor" stroke-width="1.4"/>
+            <circle cx="12" cy="9" r="2.4" fill="none" stroke="currentColor" stroke-width="1.4"/>
+          </svg>
+          <span class="location-name">Reception · Navi Mumbai</span>
+          <span class="location-address">Ramada, Mahape</span>
+        </div>
       </div>
     </div>
   </section>
