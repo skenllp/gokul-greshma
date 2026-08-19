@@ -89,6 +89,55 @@ button{ font-family:inherit; cursor:pointer; }
 ::selection{ background:var(--gold); color:var(--jasmine); }
 
 /* ============================================================
+   CUSTOM CURSOR
+   ============================================================ */
+#cursor-dot{
+  position:fixed; top:0; left:0; width:8px; height:8px; border-radius:50%;
+  background:var(--gold-soft); pointer-events:none; z-index:9999;
+  transform:translate(-50%,-50%);
+  transition:width .25s var(--ease-soft), height .25s var(--ease-soft), background .25s, opacity .3s;
+  box-shadow:0 0 14px 3px rgba(201,163,96,.55);
+  mix-blend-mode:normal;
+  will-change:left,top;
+}
+#cursor-dot.is-active{ width:26px; height:26px; background:rgba(201,163,96,.28); box-shadow:0 0 18px 4px rgba(201,163,96,.4); }
+@media (hover:none), (pointer:coarse){ #cursor-dot{ display:none; } }
+
+/* ============================================================
+   SCROLL PROGRESS
+   ============================================================ */
+#scroll-progress{
+  position:fixed; top:0; left:0; height:2px; width:0%;
+  background:linear-gradient(90deg, var(--gold-deep), var(--gold), var(--gold-soft));
+  z-index:600; transition:width .1s linear;
+  box-shadow:0 0 8px rgba(201,163,96,.6);
+}
+
+/* ============================================================
+   AMBIENT PARTICLES — gold dust + jasmine petals
+   ============================================================ */
+#particles{ position:fixed; inset:0; pointer-events:none; z-index:6; }
+
+/* ============================================================
+   BACK TO TOP
+   ============================================================ */
+#back-to-top{
+  position:fixed; z-index:200;
+  left:max(16px, env(safe-area-inset-left));
+  bottom:max(16px, env(safe-area-inset-bottom));
+  width:44px; height:44px; border-radius:50%;
+  border:1px solid rgba(255,248,232,.55);
+  background:rgba(23,63,50,.55);
+  backdrop-filter:blur(3px);
+  color:var(--jasmine);
+  display:flex; align-items:center; justify-content:center;
+  opacity:0; visibility:hidden; transform:translateY(14px) scale(.92);
+  transition:opacity .4s var(--ease-soft), visibility .4s, transform .4s var(--ease-soft), box-shadow .3s;
+}
+#back-to-top.show{ opacity:1; visibility:visible; transform:translateY(0) scale(1); }
+#back-to-top:hover, #back-to-top:active{ box-shadow:0 0 16px rgba(201,163,96,.5); }
+
+/* ============================================================
    TYPE SYSTEM
    ============================================================ */
 .eyebrow{
@@ -408,12 +457,22 @@ main.is-visible{ opacity:1; transition:opacity 1.2s var(--ease-soft); }
   background-repeat:no-repeat;
   background-size:cover;
   background-attachment:fixed;
+  transform:scale(1.04);
+  animation:slowZoom 26s ease-in-out infinite alternate;
+  will-change:transform;
+}
+@keyframes slowZoom{
+  0%{ transform:scale(1.04); }
+  100%{ transform:scale(1.14); }
 }
 @media (max-width:900px){
   /* iOS Safari doesn't honor background-attachment:fixed reliably,
      so on phones we fall back to a plain full-bleed cover image —
      each section is still a full 100dvh "page". */
   .bg-layer{ background-attachment:scroll; }
+}
+@media (prefers-reduced-motion: reduce){
+  .bg-layer{ animation:none; transform:scale(1.04); }
 }
 .overlay{
   position:absolute;
@@ -584,13 +643,83 @@ main.is-visible{ opacity:1; transition:opacity 1.2s var(--ease-soft); }
 .countdown{
   display:flex;
   justify-content:center;
-  gap:clamp(10px,4vw,22px);
-  margin-top:30px;
+  align-items:center;
+  gap:clamp(10px,3.2vw,22px);
+  margin-top:34px;
 }
-.countdown .unit{ display:flex; flex-direction:column; align-items:center; min-width:52px; }
-.countdown .num{ font-family:var(--font-display); font-weight:600; font-size:clamp(24px,6vw,34px); color:var(--deep-green); line-height:1; font-variant-numeric:tabular-nums; }
-.countdown .lbl{ margin-top:6px; font-size:9px; letter-spacing:.2em; text-transform:uppercase; color:var(--gold-deep); }
-.countdown .sep{ font-family:var(--font-display); font-size:22px; color:var(--gold); opacity:.5; align-self:flex-start; margin-top:2px; }
+.countdown .unit{ display:flex; flex-direction:column; align-items:center; }
+.countdown .flip-card{
+  position:relative;
+  width:clamp(56px,14vw,78px);
+  height:clamp(64px,16vw,88px);
+  perspective:320px;
+}
+.countdown .num{
+  position:absolute; inset:0;
+  display:flex; align-items:center; justify-content:center;
+  border-radius:6px;
+  background:linear-gradient(180deg, #1c4536 0%, #143327 55%, #0f2a20 100%);
+  border:1px solid rgba(201,163,96,.55);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.06) inset,
+    0 14px 30px -14px rgba(0,0,0,.65),
+    0 0 0 1px rgba(0,0,0,.2),
+    0 0 22px -6px rgba(201,163,96,.35);
+  font-family:var(--font-display);
+  font-weight:600;
+  font-size:clamp(26px,6.6vw,38px);
+  color:var(--jasmine);
+  line-height:1;
+  letter-spacing:.02em;
+  font-variant-numeric:tabular-nums;
+  text-shadow:0 2px 10px rgba(0,0,0,.4);
+}
+.countdown .num::before{
+  content:''; position:absolute; inset:0; border-radius:6px;
+  background:linear-gradient(180deg, rgba(255,255,255,.08), transparent 40%);
+  pointer-events:none;
+}
+.countdown .num::after{
+  content:''; position:absolute; left:6px; right:6px; top:50%; height:1px;
+  background:rgba(0,0,0,.45);
+  box-shadow:0 1px 0 rgba(255,255,255,.05);
+}
+.countdown .flip-card.is-flipping .num{ animation:flipDigit .5s ease; }
+@keyframes flipDigit{
+  0%{ transform:rotateX(0deg); }
+  45%{ transform:rotateX(-90deg); }
+  55%{ transform:rotateX(-90deg); }
+  100%{ transform:rotateX(0deg); }
+}
+.countdown .lbl{
+  margin-top:10px;
+  font-size:10px;
+  letter-spacing:.26em;
+  text-transform:uppercase;
+  font-weight:600;
+  color:var(--gold-soft);
+  text-shadow:0 1px 4px rgba(0,0,0,.5);
+}
+.countdown .sep{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  align-self:center;
+  height:clamp(56px,14vw,78px);
+}
+.countdown .sep::before,
+.countdown .sep::after{
+  content:'';
+  width:6px; height:6px;
+  border-radius:50%;
+  background:var(--gold-soft);
+  box-shadow:0 0 8px rgba(201,163,96,.9), 0 1px 3px rgba(0,0,0,.5);
+}
+@media (prefers-reduced-motion: reduce){
+  .countdown .flip-card.is-flipping .num{ animation:none; }
+}
 
 /* ============================================================
    LOCATIONS
@@ -817,6 +946,41 @@ main.is-visible{ opacity:1; transition:opacity 1.2s var(--ease-soft); }
 @media (min-width:700px){ .photo-wall{ columns:2; } }
 @media (min-width:1000px){ .photo-wall{ columns:3; } }
 
+.photo-card__paper{ cursor:pointer; }
+
+/* ============================================================
+   GALLERY LIGHTBOX
+   ============================================================ */
+#gallery-lightbox{
+  position:fixed; inset:0; z-index:800;
+  display:flex; align-items:center; justify-content:center;
+  background:rgba(13,13,10,.92);
+  backdrop-filter:blur(8px);
+  opacity:0; visibility:hidden; pointer-events:none;
+  transition:opacity .4s var(--ease-soft), visibility .4s;
+  padding:6vh 6vw;
+}
+#gallery-lightbox.show{ opacity:1; visibility:visible; pointer-events:auto; }
+#gallery-lightbox img{
+  max-width:92vw; max-height:86vh;
+  border-radius:4px;
+  box-shadow:0 30px 80px rgba(0,0,0,.6);
+  transform:scale(.94);
+  transition:transform .45s var(--ease-soft);
+}
+#gallery-lightbox.show img{ transform:scale(1); }
+#gallery-lightbox-close{
+  position:absolute;
+  top:max(18px, env(safe-area-inset-top));
+  right:max(18px, env(safe-area-inset-right));
+  width:42px; height:42px; border-radius:50%;
+  border:1px solid rgba(245,239,226,.5);
+  background:rgba(23,63,50,.55);
+  backdrop-filter:blur(3px);
+  display:flex; align-items:center; justify-content:center;
+  color:var(--jasmine);
+}
+
 /* ============================================================
    FOOTER GROUP TEXT (RSVP / Closing) — light text over dark photo
    ============================================================ */
@@ -879,6 +1043,10 @@ main.is-visible{ opacity:1; transition:opacity 1.2s var(--ease-soft); }
 </style>
 </head>
 <body class="intro-active">
+
+<canvas id="particles" aria-hidden="true"></canvas>
+<div id="cursor-dot" aria-hidden="true"></div>
+<div id="scroll-progress" aria-hidden="true"></div>
 
 <!-- ============================================================
      OPENING VIDEO
@@ -988,13 +1156,13 @@ main.is-visible{ opacity:1; transition:opacity 1.2s var(--ease-soft); }
       </div>
 
       <div class="countdown reveal" id="countdown-wedding" aria-label="Countdown to the wedding ceremony">
-        <div class="unit"><span class="num" data-d>00</span><span class="lbl">Days</span></div>
-        <span class="sep">:</span>
-        <div class="unit"><span class="num" data-h>00</span><span class="lbl">Hrs</span></div>
-        <span class="sep">:</span>
-        <div class="unit"><span class="num" data-m>00</span><span class="lbl">Min</span></div>
-        <span class="sep">:</span>
-        <div class="unit"><span class="num" data-s>00</span><span class="lbl">Sec</span></div>
+        <div class="unit"><div class="flip-card"><span class="num" data-d>00</span></div><span class="lbl">Days</span></div>
+        <span class="sep" aria-hidden="true"></span>
+        <div class="unit"><div class="flip-card"><span class="num" data-h>00</span></div><span class="lbl">Hrs</span></div>
+        <span class="sep" aria-hidden="true"></span>
+        <div class="unit"><div class="flip-card"><span class="num" data-m>00</span></div><span class="lbl">Min</span></div>
+        <span class="sep" aria-hidden="true"></span>
+        <div class="unit"><div class="flip-card"><span class="num" data-s>00</span></div><span class="lbl">Sec</span></div>
       </div>
     </div>
   </section>
@@ -1034,16 +1202,6 @@ main.is-visible{ opacity:1; transition:opacity 1.2s var(--ease-soft); }
         <div class="venue-place">Kuttitheeruvu, Kayamkulam</div>
 
         <a class="btn" href="https://maps.app.goo.gl/Yzrdg26LAZJpZaYR8?g_st=ic" target="_blank" rel="noopener">View Location</a>
-      </div>
-
-      <div class="countdown reveal" id="countdown-reception" aria-label="Countdown to the reception">
-        <div class="unit"><span class="num" data-d>00</span><span class="lbl">Days</span></div>
-        <span class="sep">:</span>
-        <div class="unit"><span class="num" data-h>00</span><span class="lbl">Hrs</span></div>
-        <span class="sep">:</span>
-        <div class="unit"><span class="num" data-m>00</span><span class="lbl">Min</span></div>
-        <span class="sep">:</span>
-        <div class="unit"><span class="num" data-s>00</span><span class="lbl">Sec</span></div>
       </div>
     </div>
   </section>
@@ -1139,7 +1297,7 @@ main.is-visible{ opacity:1; transition:opacity 1.2s var(--ease-soft); }
                   data-enter="left" data-speed="0.05"
                   style="--rot:-2.6deg;--nudge-y:14px;--scale:1;--drift-delay:0s;">
             <div class="photo-card__inner">
-              <div class="photo-card__paper">
+              <div class="photo-card__paper" data-full="assets/gallery/gallery-1.jpg" data-lightbox>
                 <img loading="lazy" decoding="async" src="assets/gallery/gallery-1.jpg"
                      alt="Gokul and Greeshma sharing a quiet moment together">
               </div>
@@ -1150,7 +1308,7 @@ main.is-visible{ opacity:1; transition:opacity 1.2s var(--ease-soft); }
                   data-enter="up" data-speed="-0.04"
                   style="--rot:2.2deg;--nudge-y:-8px;--scale:.97;--drift-delay:.6s;">
             <div class="photo-card__inner">
-              <div class="photo-card__paper">
+              <div class="photo-card__paper" data-full="assets/gallery/gallery-2.jpg" data-lightbox>
                 <img loading="lazy" decoding="async" src="assets/gallery/gallery-2.jpg"
                      alt="Greeshma playing a traditional string instrument as Gokul looks on">
               </div>
@@ -1161,7 +1319,7 @@ main.is-visible{ opacity:1; transition:opacity 1.2s var(--ease-soft); }
                   data-enter="right" data-speed="0.06"
                   style="--rot:-3.2deg;--nudge-y:10px;--scale:.98;--drift-delay:1.1s;">
             <div class="photo-card__inner">
-              <div class="photo-card__paper">
+              <div class="photo-card__paper" data-full="assets/gallery/gallery-3.jpg" data-lightbox>
                 <img loading="lazy" decoding="async" src="assets/gallery/gallery-3.jpg"
                      alt="Gokul and Greeshma smiling together on a garden swing">
               </div>
@@ -1230,6 +1388,21 @@ main.is-visible{ opacity:1; transition:opacity 1.2s var(--ease-soft); }
   </svg>
 </button>
 
+<button id="back-to-top" aria-label="Back to top">
+  <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+    <path d="M12 19V5M12 5l-6 6M12 5l6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</button>
+
+<div id="gallery-lightbox" aria-hidden="true">
+  <button id="gallery-lightbox-close" type="button" aria-label="Close image">
+    <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+      <path d="M5 5l14 14M19 5L5 19" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+    </svg>
+  </button>
+  <img id="gallery-lightbox-img" src="" alt="">
+</div>
+
 <script>
 (function(){
   "use strict";
@@ -1252,7 +1425,7 @@ main.is-visible{ opacity:1; transition:opacity 1.2s var(--ease-soft); }
     openingEl.classList.add('is-fading');
     main.classList.add('is-visible');
     document.body.classList.remove('intro-active');
-    startMusic();
+    startMusic(); // safety net — starts it here too if it somehow didn't start on click
     setTimeout(function(){
       openingEl.style.display = 'none';
       video.pause();
@@ -1262,6 +1435,12 @@ main.is-visible{ opacity:1; transition:opacity 1.2s var(--ease-soft); }
   function startInvitation(){
     if(videoStarted) return;
     videoStarted = true;
+
+    // Start the wedding music the instant the visitor taps "Open Invitation" —
+    // this is a direct user gesture, so it's the most reliable moment for
+    // browsers to allow audio autoplay. The opening video itself is muted,
+    // so there's no overlap.
+    startMusic();
 
     // Load the video source only now (preload="none" until this point)
     if(!video.getAttribute('src') && video.querySelector('source')){
@@ -1331,9 +1510,21 @@ main.is-visible{ opacity:1; transition:opacity 1.2s var(--ease-soft); }
      2. COUNTDOWN TIMERS
   --------------------------------------------------------- */
   var weddingTarget = Date.UTC(2026, 9, 25, 5, 0, 0);     // Oct 25 2026, 10:30 IST
-  var receptionTarget = Date.UTC(2026, 9, 27, 12, 30, 0); // Oct 27 2026, 18:00 IST
 
   function pad(n){ return String(n).padStart(2,'0'); }
+
+  var reduceMotionCountdown = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function setFlipDigit(el, value){
+    if(!el || el.textContent === value) return;
+    el.textContent = value;
+    var card = el.closest('.flip-card');
+    if(card && !reduceMotionCountdown){
+      card.classList.remove('is-flipping');
+      void card.offsetWidth; /* restart animation */
+      card.classList.add('is-flipping');
+    }
+  }
 
   function updateCountdown(id, target){
     var el = document.getElementById(id);
@@ -1345,15 +1536,14 @@ main.is-visible{ opacity:1; transition:opacity 1.2s var(--ease-soft); }
     var h = Math.floor((diff % 86400000) / 3600000);
     var m = Math.floor((diff % 3600000) / 60000);
     var s = Math.floor((diff % 60000) / 1000);
-    el.querySelector('[data-d]').textContent = pad(d);
-    el.querySelector('[data-h]').textContent = pad(h);
-    el.querySelector('[data-m]').textContent = pad(m);
-    el.querySelector('[data-s]').textContent = pad(s);
+    setFlipDigit(el.querySelector('[data-d]'), pad(d));
+    setFlipDigit(el.querySelector('[data-h]'), pad(h));
+    setFlipDigit(el.querySelector('[data-m]'), pad(m));
+    setFlipDigit(el.querySelector('[data-s]'), pad(s));
   }
 
   function tickCountdowns(){
     updateCountdown('countdown-wedding', weddingTarget);
-    updateCountdown('countdown-reception', receptionTarget);
   }
   tickCountdowns();
   setInterval(tickCountdowns, 1000);
@@ -1524,6 +1714,141 @@ main.is-visible{ opacity:1; transition:opacity 1.2s var(--ease-soft); }
   window.addEventListener('load', function(){
     if(typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
   });
+
+  /* ---------------------------------------------------------
+     6. CUSTOM CURSOR (desktop / fine-pointer only)
+  --------------------------------------------------------- */
+  var cursorDot = document.getElementById('cursor-dot');
+  var hasFinePointer = window.matchMedia && window.matchMedia('(hover:hover) and (pointer:fine)').matches;
+  if(cursorDot && hasFinePointer){
+    window.addEventListener('mousemove', function(e){
+      cursorDot.style.left = e.clientX + 'px';
+      cursorDot.style.top = e.clientY + 'px';
+    }, { passive:true });
+    document.querySelectorAll('a, button, .photo-card__paper, .location-card, input, textarea, select').forEach(function(el){
+      el.addEventListener('mouseenter', function(){ cursorDot.classList.add('is-active'); });
+      el.addEventListener('mouseleave', function(){ cursorDot.classList.remove('is-active'); });
+    });
+  } else if(cursorDot){
+    cursorDot.style.display = 'none';
+  }
+
+  /* ---------------------------------------------------------
+     7. SCROLL PROGRESS BAR
+  --------------------------------------------------------- */
+  var progressBar = document.getElementById('scroll-progress');
+  function updateScrollProgress(){
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    var scrolled = max > 0 ? (h.scrollTop / max) * 100 : 0;
+    progressBar.style.width = scrolled + '%';
+  }
+  window.addEventListener('scroll', function(){ window.requestAnimationFrame(updateScrollProgress); }, { passive:true });
+  updateScrollProgress();
+
+  /* ---------------------------------------------------------
+     8. BACK TO TOP
+  --------------------------------------------------------- */
+  var backToTop = document.getElementById('back-to-top');
+  if(backToTop){
+    window.addEventListener('scroll', function(){
+      if(window.scrollY > window.innerHeight * 0.9){ backToTop.classList.add('show'); }
+      else{ backToTop.classList.remove('show'); }
+    }, { passive:true });
+    backToTop.addEventListener('click', function(){
+      window.scrollTo({ top:0, behavior: reduceMotionCountdown ? 'auto' : 'smooth' });
+    });
+  }
+
+  /* ---------------------------------------------------------
+     9. GALLERY LIGHTBOX
+  --------------------------------------------------------- */
+  (function initLightbox(){
+    var lightbox = document.getElementById('gallery-lightbox');
+    var lightboxImg = document.getElementById('gallery-lightbox-img');
+    var lightboxClose = document.getElementById('gallery-lightbox-close');
+    var triggers = document.querySelectorAll('[data-lightbox]');
+    if(!lightbox || !triggers.length) return;
+
+    function openLightbox(trigger){
+      var full = trigger.getAttribute('data-full');
+      var imgEl = trigger.querySelector('img');
+      lightboxImg.src = full;
+      lightboxImg.alt = imgEl ? imgEl.alt : '';
+      lightbox.classList.add('show');
+      lightbox.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox(){
+      lightbox.classList.remove('show');
+      lightbox.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+    triggers.forEach(function(t){
+      t.addEventListener('click', function(){ openLightbox(t); });
+    });
+    lightboxClose.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', function(e){ if(e.target === lightbox) closeLightbox(); });
+    document.addEventListener('keydown', function(e){
+      if(e.key === 'Escape' && lightbox.classList.contains('show')) closeLightbox();
+    });
+  })();
+
+  /* ---------------------------------------------------------
+     10. AMBIENT PARTICLES — golden dust + jasmine petals
+  --------------------------------------------------------- */
+  (function initParticles(){
+    if(reduceMotionCountdown) return;
+    var canvas = document.getElementById('particles');
+    if(!canvas || !canvas.getContext) return;
+    var ctx = canvas.getContext('2d');
+    var w, h;
+    function resize(){ w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; }
+    resize();
+    window.addEventListener('resize', resize);
+
+    var COUNT = window.innerWidth < 700 ? 16 : 30;
+    function spawn(){
+      var petal = Math.random() > 0.6;
+      return {
+        x: Math.random() * w,
+        y: Math.random() * h - h,
+        r: petal ? (3 + Math.random()*4) : (1 + Math.random()*1.6),
+        speedY: 0.18 + Math.random()*0.4,
+        speedX: (Math.random()-0.5) * 0.45,
+        sway: Math.random()*Math.PI*2,
+        swaySpeed: 0.008 + Math.random()*0.016,
+        opacity: 0.18 + Math.random()*0.34,
+        petal: petal
+      };
+    }
+    var particles = [];
+    for(var i=0;i<COUNT;i++){ particles.push(spawn()); }
+
+    function draw(){
+      ctx.clearRect(0,0,w,h);
+      for(var i=0;i<particles.length;i++){
+        var p = particles[i];
+        p.sway += p.swaySpeed;
+        p.x += p.speedX + Math.sin(p.sway)*0.35;
+        p.y += p.speedY;
+        if(p.y > h + 20){ p.y = -20; p.x = Math.random()*w; }
+        if(p.x > w + 20) p.x = -20;
+        if(p.x < -20) p.x = w + 20;
+        ctx.beginPath();
+        if(p.petal){
+          ctx.fillStyle = 'rgba(181,138,58,' + p.opacity + ')';
+          ctx.ellipse(p.x, p.y, p.r, p.r*0.6, p.sway, 0, Math.PI*2);
+        } else {
+          ctx.fillStyle = 'rgba(255,248,232,' + p.opacity + ')';
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+        }
+        ctx.fill();
+      }
+      window.requestAnimationFrame(draw);
+    }
+    draw();
+  })();
 })();
 </script>
 </body>
