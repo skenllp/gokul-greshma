@@ -482,7 +482,7 @@ main.is-visible{ opacity:1; transition:opacity 1.2s var(--ease-soft); }
 
 /* Background A — Hero / Couple / Family — Main Temple Corridor */
 .bg-a{ background-color:#2a2115; }
-.bg-a .bg-layer{ background-image:url('assets/temple-main.jpg'); }
+.bg-a .bg-layer{ background-image:url('assets/floral-watercolor-bg.jpg'); }
 .bg-a-hero .bg-layer{ background-position:50% 12%; }
 .bg-a-couple .bg-layer{ background-position:50% 48%; }
 .bg-a-sangeeth .bg-layer{ background-position:50% 65%; }
@@ -490,70 +490,27 @@ main.is-visible{ opacity:1; transition:opacity 1.2s var(--ease-soft); }
 
 /* Background B — Wedding / Message — Temple Courtyard */
 .bg-b{ background-color:#2a2115; }
-.bg-b .bg-layer{ background-image:url('assets/temple-courtyard.jpg'); }
+.bg-b .bg-layer{ background-image:url('assets/floral-watercolor-bg.jpg'); }
 .bg-b-ceremony .bg-layer{ background-position:62% 38%; }
 .bg-b-message .bg-layer{ background-position:38% 62%; }
 .bg-b-locations .bg-layer{ background-position:70% 65%; }
 
 /* Footer family — RSVP / Closing — Forest Pond & Swan */
 .bg-f{ background-color:#241c10; }
-.bg-f .bg-layer{ background-image:url('assets/footer-swan.jpg'); }
+.bg-f .bg-layer{ background-image:url('assets/floral-watercolor-bg.jpg'); }
 .bg-f-rsvp .bg-layer{ background-position:50% 30%; }
 .bg-f-closing .bg-layer{ background-position:50% 32%; }
 
-.overlay-ivory{ background:radial-gradient(ellipse 78% 64% at 50% 48%, rgba(8,6,2,.33) 0%, rgba(8,6,2,.16) 55%, rgba(8,6,2,.03) 82%); }
-.overlay-cream{ background:radial-gradient(ellipse 78% 64% at 50% 48%, rgba(8,6,2,.31) 0%, rgba(8,6,2,.14) 55%, rgba(8,6,2,.03) 82%); }
-.overlay-dark{ background:radial-gradient(ellipse 78% 64% at 50% 45%, rgba(6,5,2,.36) 0%, rgba(6,5,2,.18) 55%, rgba(6,5,2,.05) 84%); }
+.overlay-ivory{ background:none; }
+.overlay-cream{ background:none; }
+.overlay-dark{ background:none; }
 
 /* ------------------------------------------------------------
-   TEXT OVER PHOTOGRAPHY — bg-a (temple corridor) & bg-b (courtyard)
-   sit on dark, image-heavy backdrops, so their type needs the same
-   light palette already used on the bg-f (footer) group.
+   Text now sits on the soft floral watercolor background used
+   site-wide, so it uses the same dark, warm palette (deep-green /
+   gold-deep / brown) as the rest of the page — no light-on-dark
+   override needed here anymore.
    ------------------------------------------------------------ */
-.bg-a .eyebrow, .bg-b .eyebrow,
-.bg-a .section-title, .bg-b .section-title,
-.bg-a .hero-names,
-.bg-a .couple-names,
-.bg-a .event-day, .bg-b .event-day,
-.bg-a .venue-name, .bg-b .venue-name,
-.bg-a .countdown .num, .bg-b .countdown .num,
-.bg-a .message-text, .bg-b .message-text,
-.bg-a .family-block .parents,
-.bg-a .hero-date{
-  color:var(--jasmine);
-}
-
-.bg-a .hero-mark,
-.bg-a .hero-eyebrow,
-.bg-a .hero-sub,
-.bg-a .scroll-cue span,
-.bg-a .together,
-.bg-a .event-malayalam, .bg-b .event-malayalam,
-.bg-a .event-time small, .bg-b .event-time small,
-.bg-a .venue-label, .bg-b .venue-label,
-.bg-a .countdown .lbl, .bg-b .countdown .lbl,
-.bg-a .family-block .who{
-  color:var(--gold-soft);
-}
-
-.bg-a .event-time, .bg-b .event-time,
-.bg-a .venue-place, .bg-b .venue-place,
-.bg-a .dress-value, .bg-b .dress-value,
-.bg-a .family-block .place{
-  color:var(--cream);
-  opacity:.92;
-}
-
-.bg-a .dress-label, .bg-b .dress-label,
-.bg-a .event-note, .bg-b .event-note{
-  color:var(--gold-soft);
-}
-
-.bg-a .location-tag, .bg-b .location-tag{ color:var(--jasmine); border-color:var(--gold-soft); }
-
-.bg-a .btn, .bg-b .btn{ color:var(--jasmine); border-color:var(--gold); }
-.bg-a .btn:hover, .bg-a .btn:active,
-.bg-b .btn:hover, .bg-b .btn:active{ background:var(--gold); color:var(--brown); border-color:var(--gold); }
 
 /* ============================================================
    HERO
@@ -630,7 +587,7 @@ main.is-visible{ opacity:1; transition:opacity 1.2s var(--ease-soft); }
 .venue-name{ font-family:var(--font-display); font-weight:600; font-size:clamp(20px,5vw,26px); color:var(--deep-green); margin-top:6px; }
 .venue-place{ font-size:14px; color:var(--brown); opacity:.8; margin-top:2px; line-height:1.5; }
 
-/* Location tag — small pill distinguishing multi-city functions (e.g. the two receptions) */
+/* Location tag — small pill distinguishing multi-city functions */
 .location-tag{
   display:inline-block;
   margin-bottom:4px;
@@ -783,7 +740,7 @@ main.is-visible{ opacity:1; transition:opacity 1.2s var(--ease-soft); }
   font-family:var(--font-display);
   font-weight:600;
   font-size:clamp(17px,4vw,20px);
-  color:var(--jasmine);
+  color:var(--deep-green);
 }
 .location-card .location-cta{
   flex:0 0 auto;
@@ -1015,20 +972,20 @@ main.is-visible{ opacity:1; transition:opacity 1.2s var(--ease-soft); }
 }
 
 /* ============================================================
-   FOOTER GROUP TEXT (RSVP / Closing) — light text over dark photo
+   FOOTER GROUP TEXT (RSVP / Closing) — dark text over the light
+   floral watercolor background used site-wide
    ============================================================ */
-.bg-f .section-title, .bg-f .eyebrow{ color:var(--jasmine); }
 
 /* ============================================================
    RSVP
    ============================================================ */
-.bg-f-rsvp .body-text{ color:var(--jasmine); opacity:.85; }
+.bg-f-rsvp .body-text{ color:var(--brown); opacity:.85; }
 .rsvp-buttons{ display:flex; flex-direction:column; gap:14px; margin-top:28px; max-width:340px; margin-left:auto; margin-right:auto; }
 .rsvp-btn{
   padding:16px 24px;
   border:1px solid var(--gold);
   background:transparent;
-  color:var(--jasmine);
+  color:var(--deep-green);
   font-size:12px;
   letter-spacing:.2em;
   text-transform:uppercase;
@@ -1036,22 +993,22 @@ main.is-visible{ opacity:1; transition:opacity 1.2s var(--ease-soft); }
   transition:background .35s var(--ease-soft), color .35s var(--ease-soft), border-color .35s;
 }
 .rsvp-btn.yes{ background:var(--gold); color:var(--brown); border-color:var(--gold); }
-.rsvp-btn.yes:active,.rsvp-btn.yes:hover{ background:var(--gold-deep); }
-.rsvp-btn.no:active,.rsvp-btn.no:hover{ background:rgba(255,248,232,.12); }
-.rsvp-btn[aria-pressed="true"]{ box-shadow:0 0 0 2px rgba(255,248,232,.5) inset; }
-.rsvp-response{ margin-top:18px; font-family:var(--font-display); font-style:italic; font-size:16px; color:var(--gold-soft); min-height:24px; opacity:0; transition:opacity .5s var(--ease-soft); }
+.rsvp-btn.yes:active,.rsvp-btn.yes:hover{ background:var(--gold-deep); color:var(--jasmine); }
+.rsvp-btn.no:active,.rsvp-btn.no:hover{ background:rgba(58,41,28,.08); }
+.rsvp-btn[aria-pressed="true"]{ box-shadow:0 0 0 2px rgba(58,41,28,.35) inset; }
+.rsvp-response{ margin-top:18px; font-family:var(--font-display); font-style:italic; font-size:16px; color:var(--gold-deep); min-height:24px; opacity:0; transition:opacity .5s var(--ease-soft); }
 .rsvp-response.show{ opacity:1; }
 
 /* ============================================================
    CLOSING / FOOTER
    ============================================================ */
-.bg-f-closing .body-text{ color:var(--jasmine); opacity:.85; }
-.closing-msg{ font-family:var(--font-display); font-style:italic; font-weight:500; font-size:clamp(18px,4.4vw,23px); color:var(--jasmine); line-height:1.6; }
-.compliments-label{ margin-top:26px; font-size:10px; letter-spacing:.26em; text-transform:uppercase; color:var(--gold-soft); }
-.compliments-name{ font-family:var(--font-display); font-weight:600; font-size:clamp(18px,4.2vw,22px); color:var(--jasmine); margin-top:6px; }
-.closing-names{ margin-top:30px; font-family:var(--font-script); font-size:clamp(34px,9vw,52px); color:var(--gold-soft); }
-.closing-date{ margin-top:6px; font-size:13px; letter-spacing:.32em; color:var(--jasmine); opacity:.75; }
-.closing-final{ margin-top:36px; padding-top:24px; border-top:1px solid rgba(255,248,232,.25); font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:rgba(255,248,232,.5); }
+.bg-f-closing .body-text{ color:var(--brown); opacity:.85; }
+.closing-msg{ font-family:var(--font-display); font-style:italic; font-weight:500; font-size:clamp(18px,4.4vw,23px); color:var(--deep-green); line-height:1.6; }
+.compliments-label{ margin-top:26px; font-size:10px; letter-spacing:.26em; text-transform:uppercase; color:var(--gold-deep); }
+.compliments-name{ font-family:var(--font-display); font-weight:600; font-size:clamp(18px,4.2vw,22px); color:var(--deep-green); margin-top:6px; }
+.closing-names{ margin-top:30px; font-family:var(--font-script); font-size:clamp(34px,9vw,52px); color:var(--gold-deep); }
+.closing-date{ margin-top:6px; font-size:13px; letter-spacing:.32em; color:var(--brown); opacity:.75; }
+.closing-final{ margin-top:64px; padding-top:24px; border-top:1px solid rgba(58,41,28,.2); font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:rgba(58,41,28,.55); }
 
 /* ============================================================
    REVEAL ANIMATION HELPERS (GSAP driven, base state here)
